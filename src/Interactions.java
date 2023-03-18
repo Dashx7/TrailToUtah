@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Interactions {
 
     public void out(String out){
-        System.out.println(out);
+        System.out.println(out + "\n");
     }
     public String in(Scanner theScanner){
         return theScanner.nextLine();
