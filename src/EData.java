@@ -3,9 +3,14 @@ import java.util.Map;
 
 public class EData {
     public static int faith = 0; //Will probably be from 0-100, start at 30
-    public static String characterName = "notSetYet";
+    public static String characterName = "notSetYet"; //I don't really do too much with these ngl
     public static int currentYear; //Year when the game is at
     public static int money; //0-100
+    public static int turnsSinceLastEvent;
+    public static boolean claimed100Money;
+    public static boolean claimed100Faith;
+    public static boolean isInQuorumOf12;
+
 
     public static boolean wait = true;
 
@@ -13,7 +18,7 @@ public class EData {
 
     static final int [] validYears = new int []{1805, 1820, 1823, 1827, 1829,1831,1833,1834,1836,1838,1839,1840,1842,1843,1844,1846};
 
-    //Even are the disease and Odd are the descriptions
+    //Even indexes are the disease and odd are the descriptions
     static final String [] diseases = new String[]{
             "Cholera",
             "Cholera was a major epidemic disease that affected the early Latter-day Saints during their westward migration. The disease is caused by a bacterial infection and can lead to severe dehydration and death if left untreated.",
@@ -29,8 +34,7 @@ public class EData {
             "Tuberculosis is a bacterial infection that primarily affects the lungs. It was a significant health threat to the early Latter-day Saints, particularly during the winter months when respiratory infections were more common."
     };
 
-    public static Map<Integer, String> hashMap = new HashMap<Integer, String>()
-    {{
+    public static Map<Integer, String> hashMap = new HashMap<>() {{
         put(1805, "Joseph Smith was born");
         put(1820, "God the Father and His Son, Jesus Christ, appeared to Joseph Smith.");
         put(1823, "The angel Moroni first appeared to Joseph Smith.");
@@ -50,12 +54,18 @@ public class EData {
         put(1846, "Many Saints began their journey to the Salt Lake Valley and the Nauvoo Temple was dedicated.");
     }};
 
+    //Default constructor, Idk it just kinda exists
     public EData(){}
 
     public static void setUp(){
-        faith = 30;
-        money = 30;
+        //Adjust if you want to start the game differently
+        faith = 35;
+        money = 35;
         currentYear = startYear;
+        turnsSinceLastEvent = 0;
+        claimed100Faith = false;
+        claimed100Money = false;
+        isInQuorumOf12 = false;
     }
 
     // Getter setters

@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 //This code is honestly yandere dev level of coding, so I apologize if you have to sift through this
+
+/**
+ * This is where the same is started
+ */
 public class Main {
     public static void main(String[] args) {
 
@@ -28,12 +32,13 @@ public class Main {
             I.conditionalSleep(500);
             I.out("Press Enter to continue, (S to view stats, F to toggle Quick Mode):");
             I.conditionalSleep(1200);
-            if(I.in(myScanner).compareToIgnoreCase("s")==0){
+            String input = I.in(myScanner);
+            if(input.compareToIgnoreCase("s")==0){
                 I.out("Year: " + EData.currentYear);
                 I.out("Money: " + EData.money);
                 I.out("Faith: " + EData.faith);
             }
-            if(I.in(myScanner).compareToIgnoreCase("m")==0){
+            else if(input.compareToIgnoreCase("f")==0){
                 EData.wait = !EData.wait;
             }
         }

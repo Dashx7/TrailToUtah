@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Convenient ways to interact with the system including input, output and sleep
+ */
 public class Interactions {
 
     public void out(String out){
