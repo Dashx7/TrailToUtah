@@ -7,11 +7,27 @@ public class EData {
     public static int currentYear; //Year when the game is at
     public static int money; //0-100
 
-    public static boolean wait = false;
+    public static boolean wait = true;
 
     static final int startYear = 1804; //Joseph smith is born (1 year before)
 
     static final int [] validYears = new int []{1805, 1820, 1823, 1827, 1829,1831,1833,1834,1836,1838,1839,1840,1842,1843,1844,1846};
+
+    //Even are the disease and Odd are the descriptions
+    static final String [] diseases = new String[]{
+            "Cholera",
+            "Cholera was a major epidemic disease that affected the early Latter-day Saints during their westward migration. The disease is caused by a bacterial infection and can lead to severe dehydration and death if left untreated.",
+            "Dysentery",
+            "Dysentery is an infection of the intestines that can cause severe diarrhea and dehydration. It was a common illness among the Saints during their journey westward.",
+            "Typhoid fever",
+            "Typhoid fever is a bacterial infection that can cause high fever, abdominal pain, and diarrhea. It was also a common disease among the early Latter-day Saints.",
+            "Smallpox",
+            "Smallpox is a highly contagious viral disease that causes fever, rash, and scarring. It was a significant health threat to the Saints during their migration.",
+            "Measles",
+            "Measles is a viral infection that can cause fever, rash, and respiratory symptoms. It was a common disease among children and adults during the westward migration",
+            "Tuberculosis",
+            "Tuberculosis is a bacterial infection that primarily affects the lungs. It was a significant health threat to the early Latter-day Saints, particularly during the winter months when respiratory infections were more common."
+    };
 
     public static Map<Integer, String> hashMap = new HashMap<Integer, String>()
     {{

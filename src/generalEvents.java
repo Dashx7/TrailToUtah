@@ -1,8 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
 
-//import static java.lang.System.exit;
-
 public class generalEvents {
     Interactions I = new Interactions();
     Scanner myScanner = new Scanner(System.in);
@@ -32,7 +30,7 @@ public class generalEvents {
     }
 
     public void eventGeneral1(){
-        I.out("Event: The bishop has asked you to pay extra to help for construction:");
+        I.out("Event: The bishop has asked you to pay extra to help for construction of a new temple:");
         I.out("A: Pay nothing");
         I.out("B: Pay regular tithing");
         I.out("C: Pay double");
@@ -49,7 +47,7 @@ public class generalEvents {
             //No change
         }
         else if (response.compareToIgnoreCase("c")==0) {
-            I.out("Tithing paid back double, little bit pricey, but your bishop is proud");
+            I.out("Tithing paid back double, little bit pricey, but your bishop is proud and your faith increases");
             EData.money*=.8;
             EData.faith+=10;
 
@@ -65,9 +63,60 @@ public class generalEvents {
             eventGeneral1();
         }
     }
+    public void eventGeneral2(){
+        //You get sick in this disease
+        I.out("Event: You have gotten sick with :");
+        int diseaseIndex = myRand.nextInt(0,EData.diseases.length);
+        if (diseaseIndex%2==1){
+            diseaseIndex-=1; //Set it
+        }
+        String myDisease = EData.diseases[diseaseIndex];
+        I.out(myDisease);
+
+        I.out("Type I for information or Enter to skip");
+        if(I.in(myScanner).compareToIgnoreCase("I")==0){
+            I.out(EData.diseases[diseaseIndex+1]);
+        }
+        I.out("A: Work while sick");
+        I.out("B: Pray to heal");
+        String response = I.in(myScanner);
+
+        if (response.compareToIgnoreCase("a")==0){
+            I.out("You continue to work while sick");
+            if(myRand.nextBoolean()){
+                I.out("And it works! You are a bit richer and still healthy");
+                EData.money+=20;
+            }
+            else{
+                I.out("And it doesn't go well... you feel your faith in the church diminish");
+                EData.faith-= 10;
+            }
+        }
+        else if (response.compareToIgnoreCase("b")==0) {
+            I.out("You either get a priesthood blessing or just pray and it is...");
+            I.conditionalSleep(1000);
+            if(myRand.nextInt(0,EData.faith) > 10){
+                I.out("Successful!");
+                I.conditionalSleep(1000);
+                EData.faith+=10;
+            }
+            else {
+                I.out("Unsuccessful. Dang.");
+                I.conditionalSleep(1000);
+                I.out("You pay for some medicine and it eventually clears up");
+                I.conditionalSleep(1000);
+                I.out("In reality, it wasn't that simple for latter day saints, but I the programmer am letting it slide");
+                EData.money-=20;
+            }
+        }
+        else {
+            I.out("Not a valid response, lets try that again");
+            eventGeneral1();
+        }
+    }
 
     public void event1838(){
-        I.out("Event: Govern Boggs has declared the Mormon Extermination Order do you:");
+        I.out("Event: Its 1838, Govern Boggs has declared the Mormon Extermination Order do you:");
         I.out("A: Defend your property against the attack");
         I.out("B: Leave behind everything");
         String response = I.in(myScanner);
@@ -85,12 +134,16 @@ public class generalEvents {
 
             int randomInt = myRand.nextInt(0,100);
             if(randomInt>10){
-                if(EData.wait){ I.sleep(1000);}
+                I.conditionalSleep(1000);
                 I.out("Live!");
+                I.conditionalSleep(1000);
 
                 I.out("The saints flee from Missouri into Illinois during this time due to the attacks");
-                I.out(EData.characterName + ", you will have to flee and can only carry half your total wealth with you");
-                EData.money/=2;
+                I.conditionalSleep(1000);
+                I.out("However this fighting gives you some extra time to pack your things and move out West");
+                I.conditionalSleep(1000);
+                I.out(EData.characterName + ", you will have to flee and can only carry some of your total wealth with you");
+                EData.money/=1.5;
             }
             else {
                 I.out("Die!");
@@ -99,7 +152,7 @@ public class generalEvents {
             }
         }
         else if (response.compareToIgnoreCase("b")==0) {
-            I.out("Tithing paid, but not enough to fully support the church");
+            I.out("You leave a lot ");
             EData.money-=10;
         }
         else {
@@ -118,11 +171,10 @@ public class generalEvents {
         if (response.compareToIgnoreCase("a")==0){
             I.out("Food has been paid for, but you notice you become even poorer");
             EData.money-=15;
-            if(EData.wait){
-                I.sleep(1000);
-                I.out("In reality, 100's of saints starved while fleeing West, and had no opportunity to purchase food");
+            I.conditionalSleep(1000);
+            I.out("In reality, 100's of saints starved while fleeing West, and had no opportunity to purchase food");
+            I.conditionalSleep(1000);
 
-            }
 
         }
         else if (response.compareToIgnoreCase("b")==0) {
@@ -132,12 +184,14 @@ public class generalEvents {
             int faith =  testDaFaith/ EData.faith; //Bump up 75 to make it event harder
             if(faith == 0){
                 I.out("Your faith was not enough... you find someone willing to sell you food but at exorbitant prices");
+                I.conditionalSleep(1000);
                 EData.money-=30;
             }
             else {
                 I.out("God has prepared a way for you! Food has been secured");
                 if(EData.faith/2 > testDaFaith){
                     I.out("In fact, you were so faithful that God helped you procure some extra funds as well!!");
+                    I.conditionalSleep(1000);
                     EData.money+=10;
                 }
             }
@@ -159,7 +213,12 @@ public class generalEvents {
         I.out("Which of the following Events occurred in " + EData.currentYear);
 
         int randomLetter = myRand.nextInt(0,4);
-        String answer =String.valueOf('A'+randomLetter);
+        char answerLetter = (char)('A' + randomLetter);
+        String answer = String.valueOf(answerLetter);
+
+        int[] answersAlreadyChosen = new int[4]; //An array of the years already chosen
+        answersAlreadyChosen[randomLetter] = EData.currentYear;
+
 
         for (int i = 0; i < 4; i++){
             if(i!=randomLetter){
@@ -168,21 +227,38 @@ public class generalEvents {
 
                 int randomInt = myRand.nextInt(0, EData.validYears.length);
                 int randYear = EData.validYears[randomInt];
+
+                boolean retry = false;
+                for (int year: answersAlreadyChosen) {
+                    if ((year)==randYear){
+                        i--;
+                        retry = true;
+                    }
+                }
+                if (retry){
+                    continue;
+                }
                 String fact = EData.hashMap.get(randYear);
                 I.out(letter + ": " + fact);
+                answersAlreadyChosen[i] = randYear;
             }
             else{
                 String fact = EData.hashMap.get(EData.currentYear);
-                I.out(answer + fact);
+                I.out(answer + ": " + fact);
             }
 
         }
         String in = I.in(myScanner);
 
-        if(in ==answer){
+        if(in.compareToIgnoreCase(answer)==0){
             I.out("That is correct! Faith increased and a bonus reward has been claimed");
             EData.faith+=20;
             EData.money+=10;
+        }
+        else {
+            //You were dumb and it lets you know that
+            String answerResponse = "That is incorrect, it actually was " + answerLetter + "; " + EData.hashMap.get(EData.currentYear);
+            I.out(answerResponse);
         }
 
 
@@ -190,12 +266,15 @@ public class generalEvents {
     }
 
     public void getRandomEvent(){
-        int rand = myRand.nextInt(0,2);
+        int rand = myRand.nextInt(0,3);
         if (rand==0){
-            eventGeneral1();
+            eventGeneral1(); //Bishop One
         }
-        else if(rand==1){
-            testEvent();
+        else if(rand<=2){
+            testEvent(); //Knowledge Test
+        }
+        else if (rand==3) {
+            eventGeneral2(); //Sickness one
         }
     }
 }

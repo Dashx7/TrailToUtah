@@ -1,40 +1,41 @@
 import java.util.Scanner;
 
+//This code is honestly yandere dev level of coding, so I apologize if you have to sift through this
 public class Main {
     public static void main(String[] args) {
 
 
         Interactions I = new Interactions();
-        boolean wait = EData.wait;
         EData.setUp();
         Scanner myScanner = new Scanner(System.in);
 
 
-        I.out("Hello, and welcome to the trail to Utah!");
-        if(wait)I.sleep(3000);
+        I.out("\nHello, and welcome to the trail to Utah!");
+        I.conditionalSleep(3000);
         I.out("You will mimic and learn about the lives of the saints as you follow the church through the years and travel west");
-        if(wait)I.sleep(2000);
-        I.out("Press Enter to continue:");
+        I.conditionalSleep(2000);
+        I.out("Press Enter to continue: (P.S. Please be patient with it, sometimes it takes a second for things to register)");
         I.in(myScanner);
-        if(wait)I.sleep(2000);
+        I.conditionalSleep(2000);
         I.out("What is your name fellow saint?");
         EData.characterName= (I.in(myScanner));
-        if(wait)I.sleep(1000);
+        I.conditionalSleep(1000);
         I.out("That's a nice name " + EData.characterName);
 
         YearCycler myEvents = new YearCycler();
         while (EData.currentYear <= 1848){
             myEvents.reelingInTheYears();
-            if (EData.wait){
-                I.sleep(500);
-            }
-            I.out("Press Enter to continue:");
+            I.conditionalSleep(500);
+            I.out("Press Enter to continue, (S to view stats, F to toggle Quick Mode):");
+            I.conditionalSleep(1200);
             if(I.in(myScanner).compareToIgnoreCase("s")==0){
                 I.out("Year: " + EData.currentYear);
                 I.out("Money: " + EData.money);
                 I.out("Faith: " + EData.faith);
             }
-            System.out.flush();
+            if(I.in(myScanner).compareToIgnoreCase("m")==0){
+                EData.wait = !EData.wait;
+            }
         }
 
 
